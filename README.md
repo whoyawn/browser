@@ -2,7 +2,7 @@
 
 
 
-a. How to run your project
+## How to run the project
 
 Requirements:
 - Xcode 13.1
@@ -11,15 +11,17 @@ Requirements:
 Open the `acme-browser.xcodeproj`, wait for the project to index, then press CMD + R to run.
 
 <img width="1198" alt="image" src="https://user-images.githubusercontent.com/15709918/143159971-754b7fc6-bf3d-4ccf-844a-7eb0d4b8091f.png">
-At a high level, this is how the components interact. There is a composition root, `AppDependencies` that is responsible for creating and hold references to view controller and their dependencies. The components that are being held loosely use the other dependencies indicated by the solid line.
+At a high level, this is how the components interact. There is a composition root, `AppDependencies`, that is responsible for creating and hold references to view controller and their dependencies. The view controllers inject the other dependencies indicated by the solid line.
 
+## Any additional features you implemented
 
-b. Any additional features you implemented
 - I added the bookmarks functionality. This was very simple given that the architecture already supports adding new view controllers easily. We also can inject the same bookmark store into the BookmarksViewController and BrowserViewModel
-c. Your approach to the product, including any design decisions or tradeoffs you made
-- I opted to start with a manual, lightweight DI container. Since everything is abstracted I found it extremely easy to pass around the storage objects for bookmarks and tabs. We could also replace it with Core Data/NSUserDefaults and the functionality won't change.
+- The url bar turns into a mini search engine when a non-url is submitted, although the validation does not cover every edge case
+
+## Your approach to the product, including any design decisions or tradeoffs you made
+- I opted to start with a manual, lightweight DI container. Since everything is abstracted at the topmost level I found it extremely easy to pass around the storage objects for bookmarks and tabs. We could also replace it with Core Data/NSUserDefaults and the functionality won't change.
 - I tried to showcase dependency injection wherever possible. There were a few places in the app where I called `UIApplication` directly, and in a more complex scenario, we would want to also turn that into an protocol and inject the implementation.
-- I chose delegation as the main communication pattern between components and closure injection where I felt the use case was more simple. There is also one place in the app in the view model that I use Combine because I thought it would be more clear to see a property observed (if we use delegation we could name the variable `bookmarkWasUpdated`, but there are too many ways you can interpret that)
+- I chose delegation as the main communication pattern between components and closure injection where I felt the use case was more simple. There is also one place in the app in the view model that I use Combine because I thought it would be more clear to see a property observed (if we use delegation we need to name the bookmark checker to something like `bookmarkWasUpdated` and cover many use cases, but there are too many ways you can interpret that)
 - Approach to finer details are written in the comments
 - The BrowserViewController is the main controller that deals with delegate routing and data, and I found that I was starting to need a lot of delegation to communicate between the its many subviews. In production, we can start to consider possibly moving parts of the views into their own container view controller and have shared view models. 
 - For the BookmarksViewController and TabsViewController, I decided that the business logic was simple enough I could directly inject dependencies in the view controller and not need any extra indirection.
