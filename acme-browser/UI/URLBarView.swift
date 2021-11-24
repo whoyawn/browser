@@ -19,10 +19,7 @@ class URLBarView: UIView {
     weak var delegate: URLBarDelegate?
     var isPageBookmarked = false {
         didSet {
-            let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium, scale: .default)
-            let name = isPageBookmarked ? "star.fill" : "star"
-            let image = UIImage(systemName: name, withConfiguration: config)
-            bookmarkButton.setImage(image, for: .normal)
+            toggleBookmark()
         }
     }
     
@@ -71,9 +68,18 @@ class URLBarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func toggleBookmark() {
+        let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium, scale: .default)
+        let name = isPageBookmarked ? "star.fill" : "star"
+        let image = UIImage(systemName: name, withConfiguration: config)
+        bookmarkButton.setImage(image, for: .normal)
+    }
+    
     private func setupSubviews() {
         addSubview(textField)
         addSubview(buttonStack)
+        
+        toggleBookmark()
         
         textField.topAnchor.constraint(equalTo: topAnchor).isActive = true
         textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true

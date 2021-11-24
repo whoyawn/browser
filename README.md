@@ -11,7 +11,7 @@ Requirements:
 Open the `acme-browser.xcodeproj`, wait for the project to index, then press CMD + R to run.
 
 b. Any additional features you implemented
-
+- I added the bookmarks functionality. This was very simple given that the architecture already supports adding new view controllers easily. We also can inject the same bookmark store into the BookmarksViewController and BrowserViewModel
 c. Your approach to the product, including any design decisions or tradeoffs you made
 - I opted to start with a manual, lightweight DI container. Since everything is abstracted I found it extremely easy to pass around the storage objects for bookmarks and tabs. We could also replace it with Core Data/NSUserDefaults and the functionality won't change.
 - I tried to showcase dependency injection wherever possible. There were a few places in the app where I called `UIApplication` directly, and in a more complex scenario, we would want to also turn that into an protocol and inject the implementation.
