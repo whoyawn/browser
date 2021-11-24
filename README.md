@@ -10,6 +10,9 @@ Requirements:
 
 Open the `acme-browser.xcodeproj`, wait for the project to index, then press CMD + R to run.
 
+<img width="1198" alt="image" src="https://user-images.githubusercontent.com/15709918/143159971-754b7fc6-bf3d-4ccf-844a-7eb0d4b8091f.png">
+At a high level, this is how the components interact. There is a composition root, `AppDependencies` that is responsible for creating and hold references to view controller and their dependencies. The components that are being held loosely use the other dependencies indicated by the solid line.
+
 b. Any additional features you implemented
 
 c. Your approach to the product, including any design decisions or tradeoffs you made
